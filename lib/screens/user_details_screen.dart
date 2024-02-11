@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'display_details.dart'; // Make sure to create this screen
 import 'package:priest_app/utils/database_utils.dart'; // Import your DatabaseHelper
 import 'package:priest_app/utils/user_model.dart';
 import 'package:priest_app/utils/standard_widgets.dart';
@@ -118,7 +116,7 @@ class UserDetailsScreenState extends State<UserDetailsScreen> {
                       MaterialPageRoute(
                           builder: (context) =>
                               //DisplayUserDetailsScreen(user: newUser)),
-                              HomeScreen()),
+                              const HomeScreen()),
                     );
                   }
                 },

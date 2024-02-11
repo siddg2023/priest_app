@@ -1,7 +1,4 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:priest_app/utils/standard_widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

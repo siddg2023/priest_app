@@ -29,3 +29,8 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
+
+var blueLight = 0xFF219ebc;
+var blueDark = 0xFF023047;
+var orangeLight = 0xFFffb703;
+var saffron = 0xFFfb8500;

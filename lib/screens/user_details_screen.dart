@@ -4,6 +4,7 @@ import 'display_details.dart'; // Make sure to create this screen
 import 'package:priest_app/utils/database_utils.dart'; // Import your DatabaseHelper
 import 'package:priest_app/utils/user_model.dart';
 import 'package:priest_app/utils/standard_widgets.dart';
+import 'home_screen.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   final String email; // Assuming email is passed from the SignUpScreen
@@ -42,6 +43,7 @@ class UserDetailsScreenState extends State<UserDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(blueLight),
         title: const Text('Fill Out Your Details'),
       ),
       body: Container(
@@ -115,7 +117,8 @@ class UserDetailsScreenState extends State<UserDetailsScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              DisplayUserDetailsScreen(user: newUser)),
+                              //DisplayUserDetailsScreen(user: newUser)),
+                              HomeScreen()),
                     );
                   }
                 },

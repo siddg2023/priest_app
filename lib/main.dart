@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Hindu Ceremonies App',
       theme: ThemeData(
         // Primary color for the app
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
         // AppBar theme
         appBarTheme: const AppBarTheme(
-          color: Color(0xFFFF9933), // Saffron
+          color: Colors.white, // Saffron
           iconTheme: IconThemeData(color: Colors.white),
         ),
         // Text theme

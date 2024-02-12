@@ -1,38 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:priest_app/screens/history_screen.dart';
+import 'package:priest_app/screens/profile_screen.dart';
+import 'package:priest_app/screens/user_details_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0; // Default index of first screen
+
+  // List of screens for each tab
+  final List<Widget> _screens = [
+    const HomeScreenDisplay(),
+    const OrdersScreen(),
+    const ProfileScreen(),
+  ];
+
+  var appBarText = ["Hello Siddhant!", "Order History", "My Profile"];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
             automaticallyImplyLeading: false,
-            title: const Text(
-              "Hello Siddhant!",
+            title: Text(
+              appBarText[_selectedIndex],
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
             )),
-        body: SingleChildScrollView(
-          child: Container(
-            width: double.infinity,
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  titleText("Trending Now"),
-                  horizontalScrollingList(),
-                  titleText("Recommended"),
-                  horizontalScrollingList(),
-                  titleText("Near You"),
-                  verticalScrollingList()
-                ],
-              ),
-            ),
-          ),
-        ),
+        body: _screens.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
+          elevation: 2,
           backgroundColor: Colors.white,
           items: const [
             BottomNavigationBarItem(
@@ -48,7 +55,41 @@ class HomeScreen extends StatelessWidget {
               label: '',
             ),
           ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+          onTap: _onItemTapped,
         ));
+  }
+
+  Widget spacing() {
+    return const SizedBox(
+      height: 10,
+    );
+  }
+}
+
+class HomeScreenDisplay extends StatelessWidget {
+  const HomeScreenDisplay({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            titleText("Trending Now"),
+            horizontalScrollingList(),
+            titleText("Recommended"),
+            horizontalScrollingList(),
+            titleText("Near You"),
+            verticalScrollingList()
+          ],
+        ),
+      ),
+    );
   }
 
   Widget horizontalScrollingList() {
@@ -145,12 +186,6 @@ class HomeScreen extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  Widget spacing() {
-    return const SizedBox(
-      height: 10,
     );
   }
 }

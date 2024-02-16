@@ -43,33 +43,66 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget profileInfo() {
-    return Container(
-        padding: const EdgeInsets.all(10),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.white, // Box background color
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
-              blurRadius: 4,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(10),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white, // Box background color
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 4,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                alignment: Alignment.topRight,
+                child: const Text('Edit Profile'),
+              ),
+              infoItem('Email', 'sgtest@gmail.com'),
+              infoItem('Phone', '780.239.0244'),
+              infoItem('Address', '123 ABC Ave NW')
+            ],
+          ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              alignment: Alignment.topRight,
-              child: const Text('Edit Profile'),
-            ),
-            infoItem('Email', 'sgtest@gmail.com'),
-            infoItem('Phone', '780.239.0244'),
-            infoItem('Address', '123 ABC Ave NW')
-          ],
-        ));
+        const SizedBox(
+          height: 12,
+        ),
+        Container(
+          padding: const EdgeInsets.all(10),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white, // Box background color
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 4,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              optionItem(Icons.settings, 'Settings'),
+              optionItem(Icons.message, "Messages"),
+              optionItem(Icons.card_giftcard, "Promotions"),
+              optionItem(Icons.info, "Details")
+            ],
+          ),
+        ),
+      ],
+    );
   }
 
   Widget infoItem(description, value) {
@@ -88,6 +121,24 @@ class ProfileScreen extends StatelessWidget {
               color: Colors.black, fontSize: 18, fontWeight: FontWeight.w300),
         ),
       ],
+    );
+  }
+
+  Widget optionItem(iconData, text) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+      child: Row(
+        children: [
+          Icon(iconData),
+          const SizedBox(
+            width: 12,
+          ),
+          Text(
+            text,
+            style: const TextStyle(fontSize: 16),
+          ),
+        ],
+      ),
     );
   }
 }

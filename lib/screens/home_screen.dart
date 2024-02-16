@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:priest_app/screens/history_screen.dart';
 import 'package:priest_app/screens/profile_screen.dart';
+import 'package:priest_app/screens/service_details.dart';
 import 'package:priest_app/screens/user_details_screen.dart';
+import 'package:priest_app/utils/standard_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
             automaticallyImplyLeading: false,
             title: Text(
               appBarText[_selectedIndex],
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
             )),
         body: _screens.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
@@ -80,9 +82,9 @@ class HomeScreenDisplay extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            titleText("Trending Now"),
-            horizontalScrollingList(),
-            titleText("Recommended"),
+            titleText("Services"),
+            serviceTab(),
+            titleText("Popular"),
             horizontalScrollingList(),
             titleText("Near You"),
             verticalScrollingList()
@@ -92,35 +94,115 @@ class HomeScreenDisplay extends StatelessWidget {
     );
   }
 
+  Widget serviceContainer(iconData, text) {
+    return Expanded(
+      flex: 1,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: InkWell(
+          onTap: () {},
+          child: Ink(
+            padding: const EdgeInsets.all(8),
+            height: 120,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: const Color(0xFF669bbc)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                Icon(
+                  iconData,
+                  color: Colors.white,
+                ),
+                const Spacer(),
+                Text(
+                  text,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget serviceTab() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        serviceContainer(Icons.home_filled, "Home"),
+        serviceContainer(Icons.people, "Wedding"),
+        serviceContainer(Icons.celebration, "Festive"),
+        serviceContainer(Icons.stars, "Astrology")
+      ],
+    );
+  }
+
   Widget horizontalScrollingList() {
+    var pujas = [
+      "Griha Pravesh",
+      "Satyanarayan Puja",
+      "Janmashtami",
+      "Diwali Lakshmi Puja",
+      "Navratri Puja"
+    ];
+    var pujaSummaries = [
+      "Griha Pravesh Puja is a sacred housewarming ceremony performed to ensure health, prosperity, and to ward off negative energies in a new home. It involves Vastu Puja and seeks blessings from deities like Lord Ganesha and Goddess Lakshmi.",
+      "Satyanarayan Puja is a religious worship of Lord Vishnu conducted to bring good luck, success, and to overcome obstacles. It is typically performed on full moon days and special occasions, involving stories of Lord Vishnu's benevolence.",
+      "Janmashtami celebrates the birth of Lord Krishna, marked by fasting, singing, prayer, and dramatic enactments of Krishna's life. At midnight, the moment of Krishna's birth, devotees perform aarti and offer prayers.",
+      "Diwali Lakshmi Puja is conducted during Diwali, the festival of lights, to worship Goddess Lakshmi for wealth, prosperity, and well-being. The puja involves lighting lamps, offering prayers, and distributing sweets.",
+      "Navratri Puja spans nine nights dedicated to the worship of Goddess Durga and her nine forms. It includes fasting, chanting, dancing (Garba/Dandiya), and culminates in Dussehra, celebrating the victory of good over evil.",
+    ];
+
     return SizedBox(
-      height: 180,
+      height: 190,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 10,
+        itemCount: 5,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 240,
-                  height: 140,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.blueAccent,
-                  ),
-                  //margin: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Center(
-                    child: Text('Pooja ${index + 1}',
-                        style: const TextStyle(color: Colors.white)),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ServiceDetails(
+                                title: pujas[index],
+                                description: pujaSummaries[index],
+                              )),
+                    );
+                  },
+                  child: Ink(
+                    width: 240,
+                    height: 140,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xFF780000),
+                    ),
+                    //margin: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Center(
+                      child: Text(pujas[index],
+                          style: const TextStyle(color: Colors.white)),
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
-                Text('Pooja ${index + 1}'),
+                Text(
+                  pujas[index],
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500),
+                ),
               ],
             ),
           );
@@ -134,7 +216,7 @@ class HomeScreenDisplay extends StatelessWidget {
         child: Text(
           text,
           style: const TextStyle(
-            fontSize: 16, // Adjust the font size as needed
+            fontSize: 20, // Adjust the font size as needed
             fontWeight: FontWeight.w400, // Makes the text bold
             color: Colors.black87, // Change the color as needed
           ),
@@ -165,21 +247,25 @@ class HomeScreenDisplay extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: double.maxFinite,
-                height: 150,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.blueAccent,
-                ),
-                //margin: const EdgeInsets.symmetric(horizontal: 5),
-                child: Center(
-                  child: Text(hinduTempleNames[index],
-                      style: const TextStyle(color: Colors.white)),
+              InkWell(
+                onTap: () {},
+                child: Ink(
+                  width: double.maxFinite,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xFF588157),
+                  ),
+                  //margin: const EdgeInsets.symmetric(horizontal: 5),
                 ),
               ),
               const SizedBox(
                 height: 4,
+              ),
+              Text(
+                hinduTempleNames[index],
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               Text(addresses[index]),
             ],

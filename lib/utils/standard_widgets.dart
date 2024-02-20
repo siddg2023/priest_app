@@ -30,7 +30,7 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
-var blueLight = 0xFF219ebc;
-var blueDark = 0xFF023047;
-var orangeLight = 0xFFffb703;
-var saffron = 0xFFfb8500;
+const blueLight = 0xFF8ecae6;
+const blueDark = 0xFF219ebc;
+const orangeLight = 0xFFffb703;
+const saffron = 0xFFFF9933;

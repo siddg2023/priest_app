@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String phone;
+  final String address;
+
+  const ProfileScreen(
+      {super.key,
+      required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.phone,
+      required this.address});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +32,10 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          const Center(
+          Center(
             child: Text(
-              'Siddhant Gautam',
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.w400),
+              "$firstName $lastName",
+              style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w400),
             ),
           ),
           const SizedBox(height: 10),
@@ -67,9 +79,9 @@ class ProfileScreen extends StatelessWidget {
                 alignment: Alignment.topRight,
                 child: const Text('Edit Profile'),
               ),
-              infoItem('Email', 'sgtest@gmail.com'),
-              infoItem('Phone', '780.239.0244'),
-              infoItem('Address', '123 ABC Ave NW')
+              infoItem('Email', email),
+              infoItem('Phone', phone),
+              infoItem('Address', address)
             ],
           ),
         ),

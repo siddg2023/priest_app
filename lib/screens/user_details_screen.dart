@@ -1,129 +1,176 @@
 import 'package:flutter/material.dart';
-import 'package:priest_app/utils/database_utils.dart'; // Import your DatabaseHelper
-import 'package:priest_app/utils/user_model.dart';
+import 'package:priest_app/screens/home_screen.dart';
 import 'package:priest_app/utils/standard_widgets.dart';
-import 'home_screen.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   final String email; // Assuming email is passed from the SignUpScreen
-  final String password; // Assuming password is passed from the SignUpScreen
 
-  const UserDetailsScreen(
-      {Key? key, required this.email, required this.password})
-      : super(key: key);
+  const UserDetailsScreen({Key? key, required this.email}) : super(key: key);
 
   @override
   UserDetailsScreenState createState() => UserDetailsScreenState();
 }
 
 class UserDetailsScreenState extends State<UserDetailsScreen> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  bool _useMyLocation = false;
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _addressController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    addressController.dispose();
+    passwordController.dispose();
     super.dispose();
-  }
-
-  void _getUserLocation() {
-    // Implement location retrieval logic here
-    setState(() {
-      _useMyLocation = true;
-      // For demo purposes, we're setting a dummy address
-      _addressController.text = "123 My Location Address";
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(blueLight),
-        title: const Text('Fill Out Your Details'),
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: const Color(blueLight),
+        title: const Text(
+          'Welcome To Puja Connect',
+          style: TextStyle(
+              fontFamily: "Raleway-Bold",
+              fontWeight: FontWeight.normal,
+              fontSize: 24,
+              color: Colors.white),
+        ),
       ),
-      body: Container(
-        width: double.infinity,
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              const SizedBox(height: 16.0),
-              CustomTextField(
-                hintText: 'Name',
-                prefixIcon: Icons.person,
-                textController: _nameController,
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: screenHeight * 0.3,
+                color: const Color(blueLight),
               ),
-              CustomTextField(
-                hintText: 'Address',
-                prefixIcon: Icons.home,
-                textController: _addressController,
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  color: const Color(0xFFe0e1dd),
+                ),
               ),
-              const SizedBox(height: 16.0),
-              Row(
-                children: <Widget>[
-                  Checkbox(
-                    value: _useMyLocation,
-                    onChanged: (bool? value) {
-                      if (value != null) {
-                        if (value) {
-                          _getUserLocation();
-                        } else {
-                          setState(() {
-                            _useMyLocation = false;
-                            _addressController.clear();
-                          });
-                        }
-                      }
-                    },
+            ],
+          ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: screenHeight * 0.05,
                   ),
-                  GestureDetector(
-                    onTap: _useMyLocation ? null : _getUserLocation,
-                    child: const Text(
-                      'Use my location',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.blue,
+                  Card(
+                    elevation: 1,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          const Text(
+                            "Fill Out Your Details",
+                            style: TextStyle(
+                                fontFamily: "Raleway",
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          inputField(
+                              "First Name", Icons.person, firstNameController),
+                          inputField("Last Name", Icons.person_outline,
+                              lastNameController),
+                          inputField("Phone", Icons.phone, phoneController),
+                          inputField("Address", Icons.home, addressController),
+                          inputField(
+                              "Password", Icons.lock, passwordController),
+                          customElevatedButton("Continue")
+                        ],
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24.0),
-              ElevatedButton(
-                onPressed: () async {
-                  // Create a User instance with collected details
-                  User newUser = User(
-                    email: widget
-                        .email, // Use email passed from the previous screen
-                    password: widget
-                        .password, // Use password passed from the previous screen
-                    name: _nameController.text,
-                    address: _addressController.text,
-                  );
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
-                  // Save the new user details to the database
-                  await DatabaseHelper.instance.insertUser(newUser);
-
-                  // Navigate to the DisplayUserDetailsScreen to show all user details
-                  if (mounted) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              //DisplayUserDetailsScreen(user: newUser)),
-                              const HomeScreen()),
-                    );
-                  }
-                },
-                child: const Text('Save Details'),
-              ),
-            ],
+  Widget inputField(
+      String text, IconData icon, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: text,
+          labelStyle: const TextStyle(
+              fontFamily: "Raleway", fontWeight: FontWeight.bold),
+          prefixIcon: Icon(icon), // Icon for First Name
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.0), // Rounded borders
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget customElevatedButton(String buttonText) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: () async {
+          String firstName = firstNameController.text;
+          String lastName = lastNameController.text;
+          String phone = phoneController.text;
+          String address = addressController.text;
+          //String password = addressController.text;
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+
+                    //DisplayUserDetailsScreen(user: newUser)),
+                    HomeScreen(
+                      firstName: firstName,
+                      lastName: lastName,
+                      phone: phone,
+                      address: address,
+                      email: widget.email,
+                    )),
+          );
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(saffron), // Button color
+          foregroundColor: Colors.white, // Text color
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0), // Match rounded borders
+          ),
+          padding: const EdgeInsets.symmetric(
+              vertical: 15.0), // Adjust padding to match TextField height
+          minimumSize:
+              const Size(double.infinity, 50), // Match the TextField size
+        ),
+        child: Text(
+          buttonText,
+          style: const TextStyle(
+              fontFamily: "Raleway-bold",
+              fontWeight: FontWeight.normal,
+              fontSize: 20),
         ),
       ),
     );

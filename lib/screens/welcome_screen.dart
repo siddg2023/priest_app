@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'selection_screen.dart';
+import 'signup_screen.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
 class WelcomeScreen extends StatefulWidget {

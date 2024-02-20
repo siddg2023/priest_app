@@ -2,11 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:priest_app/screens/history_screen.dart';
 import 'package:priest_app/screens/profile_screen.dart';
 import 'package:priest_app/screens/service_details.dart';
-import 'package:priest_app/screens/user_details_screen.dart';
-import 'package:priest_app/utils/standard_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String phone;
+  final String address;
+  const HomeScreen(
+      {super.key,
+      required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.phone,
+      required this.address});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -14,15 +23,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0; // Default index of first screen
-
-  // List of screens for each tab
-  final List<Widget> _screens = [
-    const HomeScreenDisplay(),
-    const OrdersScreen(),
-    const ProfileScreen(),
-  ];
-
-  var appBarText = ["Hello Siddhant!", "Order History", "My Profile"];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -32,6 +32,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // List of screens for each tab
+    final List<Widget> _screens = [
+      const HomeScreenDisplay(),
+      const OrdersScreen(),
+      ProfileScreen(
+        firstName: widget.firstName,
+        lastName: widget.lastName,
+        address: widget.address,
+        email: widget.email,
+        phone: widget.phone,
+      ),
+    ];
+    var appBarText = [
+      'Hello, ${widget.firstName}!',
+      "Order History",
+      "My Profile"
+    ];
     return Scaffold(
         appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -254,7 +271,7 @@ class HomeScreenDisplay extends StatelessWidget {
                   height: 150,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color(0xFF588157),
+                    color: const Color(0xFF588157),
                   ),
                   //margin: const EdgeInsets.symmetric(horizontal: 5),
                 ),

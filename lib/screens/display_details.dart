@@ -13,7 +13,7 @@ class DisplayUserDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(blueLight), // AppBar background color
+        backgroundColor: const Color(blueLight), // AppBar background color
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
@@ -84,7 +84,7 @@ class DisplayUserDetailsScreen extends StatelessWidget {
           labelStyle: const TextStyle(color: Colors.black54),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: Color(orangeLight), width: 4),
+            borderSide: const BorderSide(color: Color(orangeLight), width: 4),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),

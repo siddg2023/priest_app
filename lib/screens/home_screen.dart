@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:priest_app/screens/history_screen.dart';
 import 'package:priest_app/screens/profile_screen.dart';
 import 'package:priest_app/screens/service_details.dart';
+import 'package:priest_app/screens/services_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String firstName;
@@ -35,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // List of screens for each tab
     final List<Widget> _screens = [
       const HomeScreenDisplay(),
+      const ServicesScreen(),
       const OrdersScreen(),
       ProfileScreen(
         firstName: widget.firstName,
@@ -46,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     var appBarText = [
       'Hello, ${widget.firstName}!',
+      'Services',
       "Order History",
       "My Profile"
     ];
@@ -63,6 +66,10 @@ class _HomeScreenState extends State<HomeScreen> {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
               label: '',
             ),
             BottomNavigationBarItem(
